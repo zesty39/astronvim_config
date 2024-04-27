@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
 -- Configuration documentation can be found with `:h astrocore`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
@@ -27,11 +25,17 @@ return {
     -- vim options can be configured here
     options = {
       opt = { -- vim.opt.<key>
-        relativenumber = true, -- sets vim.opt.relativenumber
+        relativenumber = false, -- sets vim.opt.relativenumber
         number = true, -- sets vim.opt.number
         spell = false, -- sets vim.opt.spell
-        signcolumn = "auto", -- sets vim.opt.signcolumn to auto
+        signcolumn = "yes", -- sets vim.opt.signcolumn to auto
         wrap = false, -- sets vim.opt.wrap
+        virtualedit = 'onemore',
+        list = true,
+        listchars = { tab = " -›", extends = "⟩", precedes = "⟨", trail = "•", nbsp = "␣" },
+        encoding="utf-8",
+        fileencodings="utf-8,gbk,chinese,latin1",
+        conceallevel=2,
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
@@ -45,6 +49,17 @@ return {
       -- first key is the mode
       n = {
         -- second key is the lefthand side of the map
+
+        -- best hjkl for wrap
+        ["j"] = "gj",
+        ["k"] = "gk",
+        ["gj"] = "j",
+        ["gk"] = "k",
+
+        -- disable keybindings
+        ["<F7"] = false,
+        ["<C-'>"] = false,
+        ["<C-q>"] = false,
 
         -- navigate buffer tabs with `H` and `L`
         L = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
@@ -64,10 +79,19 @@ return {
         ["<Leader>b"] = { desc = "Buffers" },
         -- quick save
         -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
+
+        -- toggle terminal
+        ["<a-=>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" },
       },
       t = {
         -- setting a mapping to false will disable it
         -- ["<esc>"] = false,
+
+        -- toggle terminal
+        ["<a-=>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" },
+
+        -- enter normal mode in terminal
+        ["<m-q>"] = { [[<c-\><c-n>]] },
       },
     },
   },
