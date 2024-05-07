@@ -41,6 +41,63 @@ return {
       return {}
     end,
   },
+  {
+    "smoka7/hop.nvim",
+    opts = {},
+    dependencies = {
+      "AstroNvim/astrocore",
+      opts = {
+        mappings = {
+          n = {
+            ["s"] = { function() require("hop").hint_words() end, desc = "Hop hint words" },
+            ["<S-s>"] = { function() require("hop").hint_lines() end, desc = "Hop hint lines" },
+          },
+        },
+      },
+    },
+  },
+  {
+    "catppuccin/nvim",
+    optional = true,
+    ---@type CatppuccinOptions
+    opts = { integrations = { hop = true } },
+  },
+  {
+    "Zeioth/compiler.nvim",
+    dependencies = {
+      {
+        "stevearc/overseer.nvim",
+        opts = {
+          task_list = { -- this refers to the window that shows the result
+            direction = "bottom",
+            min_height = 25,
+            max_height = 25,
+            default_detail = 1,
+            bindings = {
+              ["q"] = function() vim.cmd "OverseerClose" end,
+            },
+          },
+        },
+        config = function(_, opts) require("overseer").setup(opts) end,
+      },
+      {
+        "AstroNvim/astrocore",
+        opts = {
+          mappings = {
+            n = {
+              ["<Leader>r"] = { desc = " Runner" },
+              ["<Leader>rr"] = { "<cmd>CompilerOpen<cr>", desc = "Open Runners" },
+              ["<Leader>rt"] = { "<cmd>CompilerToggleResults<cr>", desc = "Open or close the compiler results" },
+              ["<Leader>rd"] = { "<cmd>CompilerRedo<cr>", desc = "Redo the last selected option" },
+              ["<Leader>rs"] = { "<cmd>CompilerStop<cr>", desc = "Dispose all tasks" },
+            },
+          },
+        },
+      }
+    },
+    cmd = { "CompilerOpen", "CompilerToggleResults" },
+    opts = {},
+  },
 
   -- == Examples of Overriding Plugins ==
 
