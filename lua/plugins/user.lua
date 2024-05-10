@@ -13,7 +13,7 @@ return {
     config = function() require("lsp_signature").setup() end,
   },
   {
-    "abecodes/tabout.nvim",
+    "kawre/neotab.nvim",
     event = "InsertEnter",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
@@ -34,12 +34,11 @@ return {
         end,
       },
     },
-    opts = function ()
-      vim.api.nvim_set_keymap('i', '<C-f>', "<Plug>(TaboutMulti)", {silent = true})
-      vim.api.nvim_set_keymap('i', '<C-b>', "<Plug>(TaboutBackMulti)", {silent = true})
-
-      return {}
-    end,
+    opts = {
+      tabkey = "<Tab>",
+      act_as_tab = true,
+      behavior = "nested",
+    }
   },
   {
     "smoka7/hop.nvim",
